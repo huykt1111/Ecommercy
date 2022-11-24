@@ -11,12 +11,13 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
 app.use(fileUpload({
-    useTempFile: true
+    useTempFiles: true
 }))
 
 // Routers
 app.use('/user', require('./routers/userRouter'))
 app.use('/api', require('./routers/categoryRouter'))
+app.use('/api', require('./routers/upload'))
 
 // Connect to mongoose
 const URI = process.env.MONGODB_URL
