@@ -9,6 +9,7 @@ import OrderHistory from './history/OrderHistory'
 import OrderDetails from './history/OrderDetails'
 import NotFound from './utils/not_found/NotFound'
 import Categories from './categories/Categories'
+import CreateProduct from './createProduct/CreateProduct'
 import {GlobalState} from '../../GlobalState'
 
 function Pages() {
@@ -24,6 +25,7 @@ function Pages() {
       <Route path='/login' exact element={isLogged ? <NotFound /> : <Login />} />
       <Route path='/register' exact element={isLogged ? <NotFound /> : <Register />} />
       <Route path='/category' exact element={isAdmin ? <Categories /> : <NotFound />} />
+      <Route path='/create_product' exact element={isAdmin ? <CreateProduct /> : <NotFound />} />
       <Route path='/history' exact element={isLogged ?  <OrderHistory /> : <NotFound /> } />
       <Route path='/history/:id' exact element={isLogged ?  <OrderDetails /> : <NotFound /> } />
       <Route path='/cart' exact element={<Cart />} />
