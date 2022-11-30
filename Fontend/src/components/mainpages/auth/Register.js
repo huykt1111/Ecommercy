@@ -6,7 +6,9 @@ function Register() {
   const [user, setUser] = useState({
     name:'', 
     email: '',	
-    password: ''
+    password: '',
+    address: '',	
+    phonenumber: ''
   })
 
   const onChangeInput = e => {
@@ -35,11 +37,13 @@ function Register() {
         <input type="text" name="name" required placeholder="Name" value={user.name} onChange={onChangeInput}	 />
         <input type="email" name="email" required placeholder="Email" value={user.email} onChange={onChangeInput}	 />
         <input type="password" name="password" required autoComplete="on" placeholder="Password" value={user.password} onChange={onChangeInput} />
+        <input type="text" name="address" required autoComplete="on" placeholder="Address" value={user.address} onChange={onChangeInput} />
+        <input type="text" name="phonenumber" required autoComplete="on" placeholder="Phone Number" value={user.phonenumber} onChange={onChangeInput} />
         <div className="row"> 
           <button type="submit">Register</button>
           <Link to="/login">Login</Link>
         </div>
-      </form>
+      </form> 
     </div>
   )
 }

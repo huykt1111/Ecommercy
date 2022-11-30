@@ -54,7 +54,7 @@ function Header() {
 
                 {isAdmin && adminRouter()}
                 {
-                    isLogged ? loggedRouter() : <li><Link to="/login">Login ♦ Register</Link></li>
+                    isLogged ? loggedRouter() : <li><Link to="/login">LOGIN ♦ REGISTER</Link></li>
                 }
 
                 <li>
