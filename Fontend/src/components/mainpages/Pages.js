@@ -8,11 +8,13 @@ import Register from './auth/Register'
 import OrderHistory from './history/OrderHistory'
 import OrderDetails from './history/OrderDetails'
 import NotFound from './utils/not_found/NotFound'
+import Categories from './categories/Categories'
 import {GlobalState} from '../../GlobalState'
 
 function Pages() {
   const state = useContext(GlobalState)
   const [isLogged] = state.userAPI.isLogged
+  const [isAdmin] = state.userAPI.isAdmin
   
   
   return (
@@ -21,6 +23,7 @@ function Pages() {
       <Route path='/detail/:id' exact element={<DetailProduct />} />
       <Route path='/login' exact element={isLogged ? <NotFound /> : <Login />} />
       <Route path='/register' exact element={isLogged ? <NotFound /> : <Register />} />
+      <Route path='/category' exact element={isAdmin ? <Categories /> : <NotFound />} />
       <Route path='/history' exact element={isLogged ?  <OrderHistory /> : <NotFound /> } />
       <Route path='/history/:id' exact element={isLogged ?  <OrderDetails /> : <NotFound /> } />
       <Route path='/cart' exact element={<Cart />} />
