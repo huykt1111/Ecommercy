@@ -1,7 +1,8 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import {GlobalState} from '../../../GlobalState'
 import Loading from '../utils/loading/Loading'
+import {useNavigate, useParams} from 'react-router-dom'
 
 const initialState = {
   product_id: '',
@@ -9,7 +10,8 @@ const initialState = {
   price: 0,
   description: 'ABC',
   content: 'ABC',
-  category: ''
+  category: '',
+  _id: ''
 
 }
 
@@ -21,6 +23,26 @@ function CreateProduct() {
   const [loading, setLoading] = useState(false)
   const [isAdmin] = state.userAPI.isAdmin
   const [token] = state.token
+  const history = useNavigate()
+  const param = useParams()
+  const [products] = state.productsAPI.products
+  const [onEdit, setOnEdit] = useState(false)
+
+  useEffect(() => {
+    if(param.id){
+      setOnEdit(true)
+      products.forEach(product => {
+        if(product._id === param.id) {
+          setProduct(product)
+          setImages(product.images)
+        }
+      })
+    } else {
+      setOnEdit(false)
+      setProduct(initialState)
+      setImages(false)
+    }
+  }, [param.id, products])
   
   const handleUpload = async e => {
     e.preventDefault()
@@ -74,6 +96,30 @@ function CreateProduct() {
     setProduct({...product, [name]:value})
   }
 
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      if(!isAdmin) return alert("You're not an admin")
+      if(!images) return alert("No Image Upload")
+
+      if(onEdit) {
+        await axios.put(`/api/products/${product._id}`, {...product, images}, {
+          headers: {Authorization: token}
+        })
+      } else {
+        await axios.post('/api/products', {...product, images}, {
+          headers: {Authorization: token}
+        })
+      }
+      setImages(false)
+      setProduct(initialState)
+      history.push("/")
+
+    } catch (e) {
+      alert(e.response.data.msg)
+    }
+  }
+
   const styleUpload = {
     display: images ? "block" : "none"
   }
@@ -92,10 +138,11 @@ function CreateProduct() {
         
       </div>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <label htmlFor="product_id">Product ID</label>
-          <input type="text" name="product_id" id="product_id" required value={product.product_id} onChange={handleChangeInput} />
+          <input type="text" name="product_id" id="product_id" required 
+            value={product.product_id} onChange={handleChangeInput} disabled={onEdit} />
         </div>
 
         <div className="row">
@@ -132,7 +179,7 @@ function CreateProduct() {
           </select>
         </div>
 
-        <button type="submit">Create</button>
+        <button type="submit">{onEdit ? "Update" : "Create" }</button>
       </form>
     </div>
   )
