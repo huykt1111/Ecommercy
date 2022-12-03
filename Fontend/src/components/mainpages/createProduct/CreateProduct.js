@@ -8,8 +8,8 @@ const initialState = {
   product_id: '',
   title: '',
   price: 0,
-  description: 'ABC',
-  content: 'ABC',
+  description: '',
+  content: '',
   category: '',
   _id: ''
 

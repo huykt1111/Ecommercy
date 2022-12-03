@@ -11,6 +11,7 @@ function Header() {
   const [isLogged] = state.userAPI.isLogged 
   const [isAdmin] = state.userAPI.isAdmin
   const [cart] = state.userAPI.cart
+  const [menu, setMenu] = useState(false)
 
   const logoutUser = async () => {
     await axios.get('/user/logout')
@@ -38,20 +39,26 @@ function Header() {
     )
   }
 
+  const toggleMenu = () => setMenu(!menu)
+
+  const styleMenu = {
+    left: menu ? 0 : "-100%"
+  }
+
   return (
     <div>
         <header>
-            <div className="menu">
+            <div className="menu" onClick={() => setMenu(!menu)}>
                 <img src={Menu} alt="" width="30" />
             </div>
 
             <div className="logo">
                 <h1>
-                    <Link to="/">{isAdmin ? 'ADMIN' : 'DevaT Shop'}</Link>
+                    <Link to="/">{isAdmin ? 'ADMIN' : 'Fresh Food'}</Link>
                 </h1>
             </div>
 
-            <ul>
+            <ul style={styleMenu}>
                 <li><Link to="/">{isAdmin ? 'PRODUCTS' : 'SHOP'}</Link></li>
 
                 {isAdmin && adminRouter()}
@@ -59,7 +66,7 @@ function Header() {
                     isLogged ? loggedRouter() : <li><Link to="/login">LOGIN ♦ REGISTER</Link></li>
                 }
 
-                <li>
+                <li onClick={() => setMenu(!menu)}>
                     <img src={Close} alt="" width="30" className="menu" />
                 </li>
             </ul>

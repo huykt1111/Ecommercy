@@ -30,7 +30,7 @@ function Filters() {
         </div>
         <input type="text" value={search} placeholder="Enter your search!"
             onChange={e => setSearch(e.target.value.toLowerCase())} />
-        <div className="row">
+        <div className="row sort">
             <span>Sort By: </span>
             <select value={sort} onChange={e => setSort(e.target.value)} >
                 <option value=''>Newest</option>
