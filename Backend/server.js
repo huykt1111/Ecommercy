@@ -34,7 +34,7 @@ mongoose.connect(URI, {
 })
 
 app.get('/', (req, res) => {
-    res.json({msg: "Welcome my channel , please subcribe for us. Thanks"})
+    res.json({msg: "Welcome My Fresh Food"})
 })
 
 const PORT = process.env.PORT || 5000
